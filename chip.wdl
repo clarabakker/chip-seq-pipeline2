@@ -2154,7 +2154,10 @@ workflow chip {
         runtime_environment = runtime_environment
     }
 
+        if(length(bam2ta.ta)>0) { File first_ta = bam2ta.ta[0] }
+
     output {
+        first_ta
         File report = qc_report.report
         File qc_json = qc_report.qc_json
         Boolean qc_json_ref_match = qc_report.qc_json_ref_match
@@ -3163,10 +3166,7 @@ task qc_report {
             --out-qc-json qc.json \
             ${'--qc-json-ref ' + qc_json_ref}
     }
-        if(length(bam2ta.ta)>0) { File first_ta = bam2ta.ta[0] }
-
     output {
-        first_ta
         File report = glob('*qc.html')[0]
         File qc_json = glob('*qc.json')[0]
         Boolean qc_json_ref_match = read_string('qc_json_ref_match.txt')=='True'
