@@ -2154,7 +2154,7 @@ workflow chip {
         runtime_environment = runtime_environment
     }
 
-        if(length(bam2ta.ta)>0) { File first_ta = bam2ta.ta[0] }
+    if(length(bam2ta.ta)>0) { File first_ta = bam2ta.ta[0] }
 
     output {
         first_ta
