@@ -245,7 +245,6 @@ workflow chip {
         String? align_trimmomatic_java_heap
         String? filter_picard_java_heap
         String? gc_bias_picard_java_heap
-        File? first_ta
     }
 
     parameter_meta {
@@ -2155,10 +2154,10 @@ workflow chip {
         runtime_environment = runtime_environment
     }
 
-    if(length(bam2ta.ta)>0) { File first_ta = bam2ta.ta[0] }
+    if(length(bam2ta.ta)>0) { File test_ta = bam2ta.ta[0] }
 
     output {
-        first_ta
+        File first_ta = test_ta
         File report = qc_report.report
         File qc_json = qc_report.qc_json
         Boolean qc_json_ref_match = qc_report.qc_json_ref_match
