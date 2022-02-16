@@ -2154,10 +2154,10 @@ workflow chip {
         runtime_environment = runtime_environment
     }
 
-    if(length(bam2ta.ta)>0) { File test_ta = bam2ta.ta[0] }
+    if(length(bam2ta.ta)>0) { File? test_ta = bam2ta.ta[0] }
 
     output {
-        File first_ta = test_ta
+        File? first_ta = test_ta
         File report = qc_report.report
         File qc_json = qc_report.qc_json
         Boolean qc_json_ref_match = qc_report.qc_json_ref_match
