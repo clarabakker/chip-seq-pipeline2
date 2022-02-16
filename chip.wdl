@@ -245,6 +245,7 @@ workflow chip {
         String? align_trimmomatic_java_heap
         String? filter_picard_java_heap
         String? gc_bias_picard_java_heap
+        File? first_ta
     }
 
     parameter_meta {
