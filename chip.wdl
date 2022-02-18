@@ -2158,6 +2158,9 @@ workflow chip {
 
     output {
         File? first_ta = test_ta
+        File optimal_peak = select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb, ''])
+        File conservative_peak = select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb, ''])
+        File sig_fc = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw, ''])
         File report = qc_report.report
         File qc_json = qc_report.qc_json
         Boolean qc_json_ref_match = qc_report.qc_json_ref_match
