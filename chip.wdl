@@ -2152,16 +2152,14 @@ workflow chip {
         overlap_opt_num_peak_qc = reproducibility_overlap.num_peak_qc,
 
         runtime_environment = runtime_environment,
-        optimal_pk = select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb]),
-        conservative_pk = select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb])
     }
 
     if(length(bam2ta.ta)>0) { File? test_ta = bam2ta.ta[0] }
 
     output {
         File? first_ta = test_ta
-        File? optimal_peak = optimal_pk
-        File? conservative_peak = conservative_pk
+        File? optimal_peak = if defined(select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb])) then select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb]) else None
+        File? conservative_peak = if defined(select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb])) then select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb]) else None
         File? sig_fc = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw])
         File report = qc_report.report
         File qc_json = qc_report.qc_json
@@ -3106,8 +3104,6 @@ task qc_report {
         File? overlap_opt_num_peak_qc
 
         File? qc_json_ref
-        File? optimal_pk
-        File? conservative_pk
 
         RuntimeEnvironment runtime_environment
     }
