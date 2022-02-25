@@ -2151,8 +2151,8 @@ workflow chip {
         overlap_opt_peak_region_size_plot = reproducibility_overlap.peak_region_size_plot,
         overlap_opt_num_peak_qc = reproducibility_overlap.num_peak_qc,
 
-        runtime_environment = runtime_environment
-        optimal_pk = select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb])
+        runtime_environment = runtime_environment,
+        optimal_pk = select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb]),
         conservative_pk = select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb])
     }
 
