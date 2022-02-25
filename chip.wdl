@@ -2155,12 +2155,12 @@ workflow chip {
     }
 
     if(length(bam2ta.ta)>0) { File? test_ta = bam2ta.ta[0] }
-    if(defined(reproducibility_idr.optimal_peak_bb) || defined(reproducibility_overlap.optimal_peak_bb)) { Array[File?] optimal_peak_ar = select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb]) }
-    if(defined(reproducibility_idr.conservative_peak_bb) || defined(reproducibility_overlap.conservative_peak_bb)) { Array[File?] conservative_peak_ar = select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb]) }
+    if(defined(reproducibility_idr.optimal_peak_bb) || defined(reproducibility_overlap.optimal_peak_bb)) { File? optimal_peak_select = select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb]) }
+    if(defined(reproducibility_idr.conservative_peak_bb) || defined(reproducibility_overlap.conservative_peak_bb)) { File? conservative_peak_select = select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb]) }
 
     output {
-        File? optimal_peak = optimal_peak_ar[0]
-        File? conservative_peak = conservative_peak_ar[0]
+        File? optimal_peak = optimal_peak_select[0]
+        File? conservative_peak = conservative_peak_select[0]
         File? first_ta = test_ta
         File? sig_fc = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw])
         File report = qc_report.report
