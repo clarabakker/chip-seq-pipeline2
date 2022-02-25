@@ -2159,8 +2159,8 @@ workflow chip {
     if(defined(reproducibility_idr.conservative_peak_bb) || defined(reproducibility_overlap.conservative_peak_bb)) { File? conservative_peak_select = select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb]) }
 
     output {
-        File? optimal_peak = optimal_peak_select[0]
-        File? conservative_peak = conservative_peak_select[0]
+        File? optimal_peak = optimal_peak_select
+        File? conservative_peak = conservative_peak_select
         File? first_ta = test_ta
         File? sig_fc = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw])
         File report = qc_report.report
