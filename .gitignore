@@ -10,6 +10,7 @@ __pycache__/
 .Python
 env/
 build/
+chip_workflows/
 develop-eggs/
 dist/
 downloads/
