@@ -3174,8 +3174,8 @@ task qc_report {
             --out-qc-html qc.html \
             --out-qc-json qc_encode.json \
             ${'--qc-json-ref ' + qc_json_ref}
-        python3 $(which 4dn_qc_report.py) ${'--in_qc_json ' + qc_encode.json} \
-            ${'--out_qc_json ' + qc.json}
+        python3 $(which 4dn_qc_report.py) ${'--in_qc_json qc_encode.json'} \
+            ${'--out_qc_json qc.json'}
     }
     output {
         File report = glob('*qc.html')[0]
