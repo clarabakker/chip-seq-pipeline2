@@ -2161,8 +2161,8 @@ workflow chip {
 
     output {
         File? first_ta = test_ta
-        File? optimal_peak = optimal_peak_select
-        File? conservative_peak = conservative_peak_select
+        File? optimal_peak = qc_report.optimal_peak_select
+        File? conservative_peak = qc_report.conservative_peak_select
         File? sig_fc = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw])[0]
         File report = qc_report.report
         File qc_json = qc_report.qc_json
