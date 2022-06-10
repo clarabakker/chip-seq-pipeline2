@@ -3178,10 +3178,6 @@ task qc_report {
             ${'--out_qc_json qc.json'}
     }
     output {
-        File? first_ta = glob('*.ta.gz')[0]
-        File? optimal_peak = glob('*optimal_peak.*.bb')[0]
-        File? conservative_peak = glob('*conservative_peak.*.bb')[0]
-        File? sig_fc = glob('*.fc.signal.bigwig')[0]
         File report = glob('*qc.html')[0]
         File qc_json = glob('*qc.json')[0]
         Boolean qc_json_ref_match = read_string('qc_json_ref_match.txt')=='True'
