@@ -2161,8 +2161,8 @@ workflow chip {
 
     output {
         File? first_ta = test_ta
-        File? optimal_peak = qc_report.optimal_peak_select
-        File? conservative_peak = qc_report.conservative_peak_select
+        File? optimal_peak = optimal_peak_select
+        File? conservative_peak = conservative_peak_select
         File? sig_fc = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw])[0]
         File report = qc_report.report
         File qc_json = qc_report.qc_json
@@ -3178,6 +3178,10 @@ task qc_report {
             ${'--out_qc_json qc.json'}
     }
     output {
+        File? first_ta = glob('*.ta.gz')[0]
+        File? optimal_peak = glob('*optimal_peak.*.bb')[0]
+        File? conservative_peak = glob('*conservative_peak.*.bb')[0]
+        File? sig_fc = glob('*.fc.signal.bigwig')[0]
         File report = glob('*qc.html')[0]
         File qc_json = glob('*qc.json')[0]
         Boolean qc_json_ref_match = read_string('qc_json_ref_match.txt')=='True'
