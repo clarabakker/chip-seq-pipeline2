@@ -2152,7 +2152,7 @@ workflow chip {
         overlap_opt_peak_region_size_plot = reproducibility_overlap.peak_region_size_plot,
         overlap_opt_num_peak_qc = reproducibility_overlap.num_peak_qc,
 
-        runtime_environment = runtime_environment,
+        runtime_environment = runtime_environment
     }
 
     if(length(bam2ta.ta)>0) { File? test_ta = bam2ta.ta[0] }
