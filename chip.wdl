@@ -3171,12 +3171,13 @@ task qc_report {
             ${'--overlap-opt-peak-region-size-qc ' + overlap_opt_peak_region_size_qc} \
             ${'--overlap-opt-peak-region-size-plot ' + overlap_opt_peak_region_size_plot} \
             ${'--overlap-opt-num-peak-qc ' + overlap_opt_num_peak_qc} \
-            ${'--out-qc-html qc.html'} \
-            ${'--out-qc-json qc_encode.json'} \
+            --out-qc-html qc.html \
+            --out-qc-json qc_encode.json \
             ${'--qc-json-ref ' + qc_json_ref}
 
-        python3 $(which 4dn_qc_report.py) ${'--in_qc_json qc_encode.json'} \
-            ${'--out_qc_json qc.json'}
+
+        python3 $(which 4dn_qc_report.py) --in_qc_json qc_encode.json \
+            --out_qc_json qc.json
     }
     output {
         File report = glob('*qc.html')[0]
