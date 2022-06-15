@@ -118,6 +118,7 @@ workflow chip {
         Array[File] fastqs_rep9_R2 = []
         Array[File] fastqs_rep10_R1 = []
         Array[File] fastqs_rep10_R2 = []
+        Array[File] fastqs = []
         Array[File] bams = []
         Array[File] nodup_bams = []
         Array[File] tas = []
@@ -150,6 +151,7 @@ workflow chip {
         Array[File] ctl_fastqs_rep9_R2 = []
         Array[File] ctl_fastqs_rep10_R1 = []
         Array[File] ctl_fastqs_rep10_R2 = []
+        Array[File] ctl_fastqs = []
         Array[File] ctl_bams = []
         Array[File] ctl_nodup_bams = []
         Array[File] ctl_tas = []
@@ -456,6 +458,11 @@ workflow chip {
             group: 'input_genomic_data',
             help: 'Make sure that they are consistent with read1 FASTQs (chip.fastqs_rep10_R1). These FASTQs are usually technical replicates to be merged.'
         }
+        fastqs: {
+            description: 'All FASTQs to be merged for a control replicate.',
+            group: 'input_genomic_data_control',
+            help: '[R1, R2] or [R1]. These FASTQs are usually technical replicates to be merged. Do not define fastqs individually (e.g. fastqs_rep1_R1) if used.'
+        }
         bams: {
             description: 'List of unfiltered/raw BAM files for each biological replicate.',
             group: 'input_genomic_data',
@@ -623,6 +630,11 @@ workflow chip {
             description: 'Read2 FASTQs to be merged for a control replicate 10.',
             group: 'input_genomic_data_control',
             help: 'Make sure that they are consistent with read1 FASTQs (chip.ctl_fastqs_rep10_R1). These FASTQs are usually technical replicates to be merged.'
+        }
+        ctl_fastqs: {
+            description: 'All FASTQs to be merged for a control replicate.',
+            group: 'input_genomic_data_control',
+            help: '[R1, R2] or [R1]. These FASTQs are usually technical replicates to be merged. Do not define fastqs individually (e.g. ctl_fastqs_rep1_R1) if used.'
         }
         ctl_bams: {
             description: 'List of unfiltered/raw BAM files for each control replicate.',
@@ -1098,9 +1110,12 @@ workflow chip {
     Float call_peak_disk_factor_ = if peak_caller_ =='spp' then call_peak_spp_disk_factor
         else call_peak_macs2_disk_factor
 
+
     # temporary 2-dim fastqs array [rep_id][merge_id]
     Array[Array[File]] fastqs_R1 = 
-        if length(fastqs_rep10_R1)>0 then
+        if length(fastqs)>0 then
+            fastqs[0]
+        else if length(fastqs_rep10_R1)>0 then
             [fastqs_rep1_R1, fastqs_rep2_R1, fastqs_rep3_R1, fastqs_rep4_R1, fastqs_rep5_R1,
             fastqs_rep6_R1, fastqs_rep7_R1, fastqs_rep8_R1, fastqs_rep9_R1, fastqs_rep10_R1]
         else if length(fastqs_rep9_R1)>0 then
@@ -1128,12 +1143,16 @@ workflow chip {
         else []
     # no need to do that for R2 (R1 array will be used to determine presense of fastq for each rep)
     Array[Array[File]] fastqs_R2 = 
-        [fastqs_rep1_R2, fastqs_rep2_R2, fastqs_rep3_R2, fastqs_rep4_R2, fastqs_rep5_R2,
+        if length(ctl_fastqs)>0 then:
+            fastqs[1]
+        else [fastqs_rep1_R2, fastqs_rep2_R2, fastqs_rep3_R2, fastqs_rep4_R2, fastqs_rep5_R2,
         fastqs_rep6_R2, fastqs_rep7_R2, fastqs_rep8_R2, fastqs_rep9_R2, fastqs_rep10_R2]
 
     # temporary 2-dim ctl fastqs array [rep_id][merge_id]
-    Array[Array[File]] ctl_fastqs_R1 = 
-        if length(ctl_fastqs_rep10_R1)>0 then
+    Array[Array[File]] ctl_fastqs_R1 =
+        if length(ctl_fastqs)>0 then
+            ctl_fastqs[0]
+        else if length(ctl_fastqs_rep10_R1)>0 then
             [ctl_fastqs_rep1_R1, ctl_fastqs_rep2_R1, ctl_fastqs_rep3_R1, ctl_fastqs_rep4_R1, ctl_fastqs_rep5_R1,
             ctl_fastqs_rep6_R1, ctl_fastqs_rep7_R1, ctl_fastqs_rep8_R1, ctl_fastqs_rep9_R1, ctl_fastqs_rep10_R1]
         else if length(ctl_fastqs_rep9_R1)>0 then
@@ -1160,8 +1179,10 @@ workflow chip {
             [ctl_fastqs_rep1_R1]
         else []
     # no need to do that for R2 (R1 array will be used to determine presense of fastq for each rep)
-    Array[Array[File]] ctl_fastqs_R2 = 
-        [ctl_fastqs_rep1_R2, ctl_fastqs_rep2_R2, ctl_fastqs_rep3_R2, ctl_fastqs_rep4_R2, ctl_fastqs_rep5_R2,
+    Array[Array[File]] ctl_fastqs_R2 =
+        if length(ctl_fastqs)>0 then:
+            ctl_fastqs[1]
+        else [ctl_fastqs_rep1_R2, ctl_fastqs_rep2_R2, ctl_fastqs_rep3_R2, ctl_fastqs_rep4_R2, ctl_fastqs_rep5_R2,
         ctl_fastqs_rep6_R2, ctl_fastqs_rep7_R2, ctl_fastqs_rep8_R2, ctl_fastqs_rep9_R2, ctl_fastqs_rep10_R2]
 
     # temporary variables to get number of replicates
