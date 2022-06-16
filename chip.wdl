@@ -1143,7 +1143,7 @@ workflow chip {
         else []
     # no need to do that for R2 (R1 array will be used to determine presense of fastq for each rep)
     Array[Array[File]] fastqs_R2 = 
-        if length(ctl_fastqs)>0 then:
+        if length(fastqs)>0 then
             fastqs[1]
         else [fastqs_rep1_R2, fastqs_rep2_R2, fastqs_rep3_R2, fastqs_rep4_R2, fastqs_rep5_R2,
         fastqs_rep6_R2, fastqs_rep7_R2, fastqs_rep8_R2, fastqs_rep9_R2, fastqs_rep10_R2]
