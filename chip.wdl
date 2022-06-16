@@ -1114,7 +1114,7 @@ workflow chip {
     # temporary 2-dim fastqs array [rep_id][merge_id]
     Array[Array[File]] fastqs_R1 = 
         if length(fastqs)>0 then
-            fastqs[0]
+            [fastqs[0]]
         else if length(fastqs_rep10_R1)>0 then
             [fastqs_rep1_R1, fastqs_rep2_R1, fastqs_rep3_R1, fastqs_rep4_R1, fastqs_rep5_R1,
             fastqs_rep6_R1, fastqs_rep7_R1, fastqs_rep8_R1, fastqs_rep9_R1, fastqs_rep10_R1]
@@ -1144,14 +1144,14 @@ workflow chip {
     # no need to do that for R2 (R1 array will be used to determine presense of fastq for each rep)
     Array[Array[File]] fastqs_R2 = 
         if length(fastqs)>0 then
-            fastqs[1]
+            [fastqs[1]]
         else [fastqs_rep1_R2, fastqs_rep2_R2, fastqs_rep3_R2, fastqs_rep4_R2, fastqs_rep5_R2,
         fastqs_rep6_R2, fastqs_rep7_R2, fastqs_rep8_R2, fastqs_rep9_R2, fastqs_rep10_R2]
 
     # temporary 2-dim ctl fastqs array [rep_id][merge_id]
     Array[Array[File]] ctl_fastqs_R1 =
         if length(ctl_fastqs)>0 then
-            ctl_fastqs[0]
+            [ctl_fastqs[0]]
         else if length(ctl_fastqs_rep10_R1)>0 then
             [ctl_fastqs_rep1_R1, ctl_fastqs_rep2_R1, ctl_fastqs_rep3_R1, ctl_fastqs_rep4_R1, ctl_fastqs_rep5_R1,
             ctl_fastqs_rep6_R1, ctl_fastqs_rep7_R1, ctl_fastqs_rep8_R1, ctl_fastqs_rep9_R1, ctl_fastqs_rep10_R1]
@@ -1181,7 +1181,7 @@ workflow chip {
     # no need to do that for R2 (R1 array will be used to determine presense of fastq for each rep)
     Array[Array[File]] ctl_fastqs_R2 =
         if length(ctl_fastqs)>0 then
-            ctl_fastqs[1]
+            [ctl_fastqs[1]]
         else [ctl_fastqs_rep1_R2, ctl_fastqs_rep2_R2, ctl_fastqs_rep3_R2, ctl_fastqs_rep4_R2, ctl_fastqs_rep5_R2,
         ctl_fastqs_rep6_R2, ctl_fastqs_rep7_R2, ctl_fastqs_rep8_R2, ctl_fastqs_rep9_R2, ctl_fastqs_rep10_R2]
 
