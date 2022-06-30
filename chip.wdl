@@ -1143,7 +1143,7 @@ workflow chip {
         else []
     # no need to do that for R2 (R1 array will be used to determine presense of fastq for each rep)
     Array[Array[File]] fastqs_R2 = 
-        if length(fastqs)>0 then
+        if length(fastqs)>1 then
             [[fastqs[1]]]
         else [fastqs_rep1_R2, fastqs_rep2_R2, fastqs_rep3_R2, fastqs_rep4_R2, fastqs_rep5_R2,
         fastqs_rep6_R2, fastqs_rep7_R2, fastqs_rep8_R2, fastqs_rep9_R2, fastqs_rep10_R2]
@@ -1180,7 +1180,7 @@ workflow chip {
         else []
     # no need to do that for R2 (R1 array will be used to determine presense of fastq for each rep)
     Array[Array[File]] ctl_fastqs_R2 =
-        if length(ctl_fastqs)>0 then
+        if length(ctl_fastqs)>1 then
             [[ctl_fastqs[1]]]
         else [ctl_fastqs_rep1_R2, ctl_fastqs_rep2_R2, ctl_fastqs_rep3_R2, ctl_fastqs_rep4_R2, ctl_fastqs_rep5_R2,
         ctl_fastqs_rep6_R2, ctl_fastqs_rep7_R2, ctl_fastqs_rep8_R2, ctl_fastqs_rep9_R2, ctl_fastqs_rep10_R2]
@@ -2179,12 +2179,13 @@ workflow chip {
     if(length(bam2ta.ta)>0) { File? test_ta = bam2ta.ta[0] }
     if(defined(reproducibility_idr.optimal_peak_bb) || defined(reproducibility_overlap.optimal_peak_bb)) { File? optimal_peak_select = select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb]) }
     if(defined(reproducibility_idr.conservative_peak_bb) || defined(reproducibility_overlap.conservative_peak_bb)) { File? conservative_peak_select = select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb]) }
+    if(defined(macs2_signal_track.fc_bw) || defined(macs2_signal_track_pooled.fc_bw)) { File? fc_bw_select = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw]) }
 
     output {
         File? first_ta = test_ta
         File? optimal_peak = optimal_peak_select
         File? conservative_peak = conservative_peak_select
-        File? fc_bw = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw])[0]
+        File? fc_bw = fc_bw_select
         File report = qc_report.report
         File qc_json = qc_report.qc_json
         Boolean qc_json_ref_match = qc_report.qc_json_ref_match
