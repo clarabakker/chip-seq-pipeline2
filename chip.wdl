@@ -2179,7 +2179,7 @@ workflow chip {
     if(length(bam2ta.ta)>0) { File? test_ta = bam2ta.ta[0] }
     if(defined(reproducibility_idr.optimal_peak_bb) || defined(reproducibility_overlap.optimal_peak_bb)) { File? optimal_peak_select = select_first([reproducibility_idr.optimal_peak_bb, reproducibility_overlap.optimal_peak_bb]) }
     if(defined(reproducibility_idr.conservative_peak_bb) || defined(reproducibility_overlap.conservative_peak_bb)) { File? conservative_peak_select = select_first([reproducibility_idr.conservative_peak_bb, reproducibility_overlap.conservative_peak_bb]) }
-    if(defined(macs2_signal_track.fc_bw) || defined(macs2_signal_track_pooled.fc_bw)) { File? fc_bw_select = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw]) }
+    if(defined(macs2_signal_track.fc_bw) || defined(macs2_signal_track_pooled.fc_bw)) { File? fc_bw_select = select_first([macs2_signal_track.fc_bw, macs2_signal_track_pooled.fc_bw])[0] }
 
     output {
         File? first_ta = test_ta
