@@ -216,6 +216,8 @@ workflow chip {
         Float bam2ta_mem_factor = 0.35
         Int bam2ta_time_hr = 6
         Float bam2ta_disk_factor = 4.0
+        # intentionally not used in WDL
+        String? bam2ta_no_filt_R1.ta
 
         Float spr_mem_factor = 20.0
         Float spr_disk_factor = 30.0
