@@ -19,7 +19,7 @@ workflow chip {
 
         specification_document: 'https://docs.google.com/document/d/1lG_Rd7fnYgRpSIqrIfuVlAz2dW1VaSQThzk836Db99c/edit?usp=sharing'
 
-        default_docker: '4dndcic/encode-chipseq:v1.1.2'
+        default_docker: '4dndcic/encode-chipseq:v2.1.6'
         default_singularity: 'https://encode-pipeline-singularity-image.s3.us-west-2.amazonaws.com/chip-seq-pipeline_v2.1.6.sif'
         croo_out_def: 'https://storage.googleapis.com/encode-pipeline-output-definition/chip.croo.v5.json'
 
@@ -71,7 +71,7 @@ workflow chip {
     }
     input {
         # group: runtime_environment
-        String docker = '4dndcic/encode-chipseq:v1.1.2'
+        String docker = '4dndcic/encode-chipseq:v2.1.6'
         String singularity = 'https://encode-pipeline-singularity-image.s3.us-west-2.amazonaws.com/chip-seq-pipeline_v2.1.6.sif'
         String conda = 'encode-chip-seq-pipeline'
         String conda_macs2 = 'encode-chip-seq-pipeline-macs2'
